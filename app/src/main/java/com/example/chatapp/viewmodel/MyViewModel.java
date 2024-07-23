@@ -34,7 +34,7 @@ public class MyViewModel extends AndroidViewModel {
         repository.signOut();
     }
 
-    public MutableLiveData<List<ChatGroup>> getChatGroupMutableLiveData() {
+    public MutableLiveData<List<ChatGroup>> getGroupList() {
         return repository.getChatGroupMutableLiveData();
     }
 
