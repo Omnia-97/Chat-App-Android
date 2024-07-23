@@ -28,4 +28,7 @@ public class Repository {
     public String getCurrentUserId(){
         return FirebaseAuth.getInstance().getUid();
     }
+    public void signOut(){
+        FirebaseAuth.getInstance().signOut();
+    }
 }
