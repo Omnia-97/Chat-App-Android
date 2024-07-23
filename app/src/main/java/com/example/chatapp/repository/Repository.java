@@ -75,4 +75,7 @@ public class Repository {
         return chatGroupsMutableLiveData;
 
     }
+    public void createNewChatGroup(String groupName){
+        reference.setValue(groupName);
+    }
 }
