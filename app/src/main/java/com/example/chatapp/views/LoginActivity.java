@@ -1,10 +1,10 @@
 package com.example.chatapp.views;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.os.Bundle;
 
 import com.example.chatapp.R;
 import com.example.chatapp.databinding.ActivityLoginBinding;

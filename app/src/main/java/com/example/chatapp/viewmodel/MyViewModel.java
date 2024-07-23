@@ -5,24 +5,40 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
+import com.example.chatapp.model.ChatGroup;
 import com.example.chatapp.repository.Repository;
 
-public class MyViewModel extends AndroidViewModel{
+import java.util.List;
+
+public class MyViewModel extends AndroidViewModel {
     Repository repository;
 
     public MyViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository();
     }
-    public void signUpAnonymousUser(){
+
+    //Auth
+    public void signUpAnonymousUser() {
         Context c = this.getApplication();
         repository.firebaseAnonymousAuth(c);
     }
-    public String getCurrentUserId(){
+
+    public String getCurrentUserId() {
         return repository.getCurrentUserId();
     }
-    public void signOut(){
+
+    public void signOut() {
         repository.signOut();
     }
+
+    public MutableLiveData<List<ChatGroup>> getChatGroupMutableLiveData() {
+        return repository.getChatGroupMutableLiveData();
+    }
+
+
+
+
 }
