@@ -76,6 +76,6 @@ public class Repository {
 
     }
     public void createNewChatGroup(String groupName){
-        reference.setValue(groupName);
+        reference.child(groupName).setValue(groupName);
     }
 }

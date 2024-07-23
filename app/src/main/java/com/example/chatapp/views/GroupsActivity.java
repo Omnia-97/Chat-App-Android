@@ -1,6 +1,13 @@
 package com.example.chatapp.views;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -24,6 +31,7 @@ public class GroupsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ActivityGroupsBinding binding;
     private MyViewModel myViewModel;
+    private Dialog chatGroupDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +50,39 @@ public class GroupsActivity extends AppCompatActivity {
                 groupAdapter = new GroupAdapter(chatGroupArrayList);
                 recyclerView.setAdapter(groupAdapter);
                 groupAdapter.notifyDataSetChanged();
+
             }
         });
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
+    }
+
+
+
+    public void showDialog(){
+        chatGroupDialog = new Dialog(this);
+        chatGroupDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_layout , null);
+        chatGroupDialog.setContentView(view);
+        chatGroupDialog.show();
+        Button submitBtn = view.findViewById(R.id.submit_btn);
+        EditText edt = view.findViewById(R.id.chat_group_edt);
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String groupName = edt.getText().toString();
+                Toast.makeText(GroupsActivity.this ,
+                        "Your group name is " + groupName , Toast.LENGTH_SHORT).show();
+
+                myViewModel.createNewGroup(groupName);
+                chatGroupDialog.dismiss();
+
+            }
+        });
+
     }
 }
