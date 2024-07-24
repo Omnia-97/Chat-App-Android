@@ -47,7 +47,10 @@ public class ChatActivity extends AppCompatActivity {
                 recyclerView.setAdapter(myAdapter);
                 myAdapter.notifyDataSetChanged();
                 int latestPosition = myAdapter.getItemCount() - 1;
-                recyclerView.scrollToPosition(latestPosition);
+                if(latestPosition > 0){
+                    recyclerView.smoothScrollToPosition(latestPosition);
+                }
+
             }
         });
         binding.setVModel(myViewModel);
@@ -56,6 +59,8 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String msg = binding.edittextChatMessage.getText().toString();
                 myViewModel.sendMessage(msg, groupName);
+
+                binding.edittextChatMessage.getText().clear();
             }
         });
     }
