@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.chatapp.model.ChatGroup;
+import com.example.chatapp.model.ChatMessage;
 import com.example.chatapp.repository.Repository;
 
 import java.util.List;
@@ -40,6 +41,11 @@ public class MyViewModel extends AndroidViewModel {
     public void createNewGroup(String groupName){
         repository.createNewChatGroup(groupName);
     }
+
+
+  public MutableLiveData<List<ChatMessage>> getMessagesLiveData(String groupName){
+        return  repository.getChatMessagesMutableLiveData(groupName);
+   }
 
 
 

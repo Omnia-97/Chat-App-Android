@@ -1,5 +1,6 @@
 package com.example.chatapp.views.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.chatapp.R;
 import com.example.chatapp.databinding.ItemCardBinding;
 import com.example.chatapp.model.ChatGroup;
+import com.example.chatapp.views.ChatActivity;
 
 import java.util.ArrayList;
 
@@ -57,7 +59,10 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-
+                    ChatGroup clickedChatGroup = groupArrayList.get(position);
+                    Intent i = new Intent(v.getContext(), ChatActivity.class);
+                    i.putExtra("groupName", clickedChatGroup.getGroupName());
+                    v.getContext().startActivity(i);
                 }
             });
         }

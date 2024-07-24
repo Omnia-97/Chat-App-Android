@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.chatapp.model.ChatGroup;
+import com.example.chatapp.model.ChatMessage;
 import com.example.chatapp.views.GroupsActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,11 +26,14 @@ public class Repository {
     MutableLiveData<List<ChatGroup>> chatGroupsMutableLiveData;
     FirebaseDatabase database;
     DatabaseReference reference;
+    DatabaseReference groupReference;
+    MutableLiveData<List<ChatMessage>> chatMessagesMutableLiveData;
 
     public Repository() {
         this.chatGroupsMutableLiveData = new MutableLiveData<>();
         database = FirebaseDatabase.getInstance();
         reference = database.getReference();
+        chatMessagesMutableLiveData = new MutableLiveData<>();
     }
 
     public void firebaseAnonymousAuth(Context context) {
@@ -75,6 +79,29 @@ public class Repository {
         return chatGroupsMutableLiveData;
 
     }
+
+    public MutableLiveData<List<ChatMessage>> getChatMessagesMutableLiveData(String groupName) {
+         groupReference = database.getReference().child(groupName);
+         List<ChatMessage> messageList = new ArrayList<>();
+         groupReference.addValueEventListener(new ValueEventListener() {
+             @Override
+             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                 messageList.clear();
+                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                     ChatMessage message = dataSnapshot.getValue(ChatMessage.class);
+                     messageList.add(message);
+                 }
+                 chatMessagesMutableLiveData.postValue(messageList);
+             }
+
+             @Override
+             public void onCancelled(@NonNull DatabaseError error) {
+
+             }
+         });
+        return chatMessagesMutableLiveData;
+    }
+
     public void createNewChatGroup(String groupName){
         reference.child(groupName).setValue(groupName);
     }
