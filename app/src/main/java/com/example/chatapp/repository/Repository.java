@@ -101,6 +101,25 @@ public class Repository {
          });
         return chatMessagesMutableLiveData;
     }
+    public void sendMessage(String messageText, String chatGroup){
+
+        DatabaseReference ref = database
+                .getReference(chatGroup);
+
+
+        if (!messageText.trim().equals("")){
+            ChatMessage msg = new ChatMessage(
+                    FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                    messageText,
+                    System.currentTimeMillis()
+            );
+
+            String randomKey = ref.push().getKey();
+
+            ref.child(randomKey).setValue(msg);
+
+        }
+    }
 
     public void createNewChatGroup(String groupName){
         reference.child(groupName).setValue(groupName);

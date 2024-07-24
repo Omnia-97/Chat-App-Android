@@ -46,6 +46,10 @@ public class MyViewModel extends AndroidViewModel {
   public MutableLiveData<List<ChatMessage>> getMessagesLiveData(String groupName){
         return  repository.getChatMessagesMutableLiveData(groupName);
    }
+   public  void sendMessage(String messageText , String groupName){
+        repository.sendMessage(messageText , groupName);
+
+   }
 
 
 
